@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<script>const host = window.location.href;</script>
+        <title>Visualize 3D Structures of Proteins</title>
+        <link rel="stylesheet" href="./index.css" />
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+		<script type="text/javascript" src="./jsmol/JSmol.min.js"></script>
+		<script type="text/javascript" src="./jsmol/Jmol2.js"></script>
+	</head>
+
+
+	<body>
+		<script>const val = localStorage.getItem("inputValue") || 'model1.pdb';</script>
+		<div class="__navbar">
+			<div class="__container __navbar__container">
+				<div class="__logo">PDB VISUALIZER</div>
+				<div class="__searchbar">
+                    <input type="text" class="__input" placeholder="Enter pdb ink Here"></input>
+                    <button class="__submit">View</button> 
+				</div>
+			</div>
+		</div>
+		
+		<div class="__container __body__container">
+			<script type="text/javascript">
+				jmolInitialize("./jsmol/");
+				jmolSetAppletColor("#000000");
+				jmolApplet(
+					1280,
+					`load ${val}; set frank off; calculate structure rama;  select all; color group; spacefill off; wireframe off; cartoons;set ambient 40;set spin x 10; set spin y 10; spin on;`
+				);
+			</script>
+		</div>
+		<script>
+		const submitHandler = () => {
+			localStorage.setItem("inputValue",inputElement.value);
+			window.location.reload();
+		}
+		document.querySelector(".__submit").addEventListener("click",submitHandler)
+		</script>
+	</body>
+</html>
